@@ -21,6 +21,7 @@ public class GraphProcessor {
      */
 
     // include instance variables here
+    private Map<Point, Set<Point>> myGraph = new HashMap<Point, Set<Point>>();
 
     public GraphProcessor(){
         // TODO initialize instance variables
@@ -35,8 +36,49 @@ public class GraphProcessor {
      * @throws IOException if file not found or error reading
      */
 
+     //Status: FINISHED BUT UNTESTED
     public void initialize(FileInputStream file) throws IOException {
-        // TODO implement by reading info and creating graph
+        if (!testFileType("" + file)) {
+			throw new IOException("Could not read .graph file");
+		}
+
+        /*File input formatting:
+        First line will always be the # of points, followed by a space, followed by # of edges
+        Next n lines will be points with the format: point name [space] lat [space] long
+        Next m lines will be edges with the format: first point [space] second vertex
+        */
+
+        Scanner s = new Scanner(new FileInputStream(new File("file")));
+        String first = s.nextLine();
+        String[] firstdata = first.split(" ");
+        int pts = Integer.parseInt(firstdata[1]);
+        int egs = Integer.parseInt(firstdata[1]);
+        String[] names = new String[pts];
+        Point[] ref = new Point[pts];
+
+        for(int i = 0; i < pts; i++)
+        {
+            String line = s.nextLine();
+            String[] data = line.split(" ");
+
+            //not sure if this is needed bruh
+            names[i] = data[0];
+            Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+            myGraph.put(input, new HashSet<Point>());
+            ref[i] = input;
+        }
+
+
+
+        
+
+
+    }
+
+    public boolean testFileType(String name){
+        int indx = name.lastIndexOf(".");
+
+        return indx > 0 && name.substring(indx + 1).equals("graph");
     }
 
     /**
