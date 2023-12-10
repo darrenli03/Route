@@ -149,8 +149,13 @@ public class GraphProcessor {
      * @return true if and onlyu if p2 is reachable from p1 (and vice versa)
      */
     public boolean connected(Point p1, Point p2) {
-        // TODO implement connected
-        return false;
+        try{
+            List<Point> test = route(p1, p2);
+        }catch(Exception IllegalArgumentException){
+            return false;
+        }
+
+        return true;
     }
 
     /**
