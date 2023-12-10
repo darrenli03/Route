@@ -190,9 +190,10 @@ public class GraphProcessor {
         while(pq.size() > 0)
         {
             current = pq.remove();
+            if(current.equals(end)) break;
         }
 
-        if(current.equals(end)) break;
+        
         for(Point p : myGraph.get(current)){
             double weight = current.distance(p);
             double newDist = distanceMap.get(current) + weight;
