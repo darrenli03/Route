@@ -148,8 +148,8 @@ public class GraphProcessor {
      * @return true if and onlyu if p2 is reachable from p1 (and vice versa)
      */
     public boolean connected(Point p1, Point p2) {
-        // TODO implement connected
-        return false;
+        List<Point> tester = new ArrayList<Point>();
+        return tester.contains(p1) && tester.contains(p2);
     }
 
     /**
