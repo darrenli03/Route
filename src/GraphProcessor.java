@@ -24,7 +24,6 @@ public class GraphProcessor {
     private Map<Point, Set<Point>> myGraph = new HashMap<Point, Set<Point>>();
 
     public GraphProcessor(){
-        // TODO initialize instance variables
 
     }
 
@@ -38,8 +37,9 @@ public class GraphProcessor {
 
      //Status: FINISHED BUT UNTESTED
     public void initialize(FileInputStream file) throws IOException {
-        //TODO this does not work because the FileInputStream file does not store the file's name
-//        if (!testFileType("" + file)) {
+        //TODO this does not work because the FileInputStream file does not store the file's name, don't think it's possible to check file name here
+
+//        if (file.e) {
 //			throw new IOException("Could not read .graph file");
 //		}
 
@@ -48,25 +48,31 @@ public class GraphProcessor {
         Next n lines will be points with the format: point name [space] lat [space] long
         Next m lines will be edges with the format: first point [space] second vertex
         */
-        Scanner s = new Scanner(file);
-        String first = s.nextLine();
-        String[] firstdata = first.split(" ");
-        int pts = Integer.parseInt(firstdata[1]);
-        int egs = Integer.parseInt(firstdata[1]);
-        String[] names = new String[pts];
-        Point[] ref = new Point[pts];
+        try{
+            Scanner s = new Scanner(file);
+            String first = s.nextLine();
+            String[] firstdata = first.split(" ");
+            int pts = Integer.parseInt(firstdata[1]);
+            int egs = Integer.parseInt(firstdata[1]);
+            String[] names = new String[pts];
+            Point[] ref = new Point[pts];
 
-        for(int i = 0; i < pts; i++)
-        {
-            String line = s.nextLine();
-            String[] data = line.split(" ");
+            for(int i = 0; i < pts; i++)
+            {
+                String line = s.nextLine();
+                String[] data = line.split(" ");
 
-            //not sure if this is needed bruh
-            names[i] = data[0];
-            Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
-            myGraph.put(input, new HashSet<Point>());
-            ref[i] = input;
+                //not sure if this is needed bruh
+                names[i] = data[0];
+                Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+                myGraph.put(input, new HashSet<Point>());
+                ref[i] = input;
+            }
+        } catch (Exception e){
+            throw new IOException("Could not read .graph file, or something else lmao idk");
         }
+
+
 
 
     }
