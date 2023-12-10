@@ -165,7 +165,33 @@ public class GraphProcessor {
      * either because start is not connected to end or because start equals end.
      */
     public List<Point> route(Point start, Point end) throws IllegalArgumentException {
-        // TODO implement route
+        Map<Point, Double> distanceMap = new HashMap<>();
+        Map<Point,Point> predMap = new HashMap<>();
+        predMap.put(start, null);
+        final Comparator<Point> comp = new Comparator<Point>(){
+            //TODO
+        };
+        PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
+        Point current = start;
+        distanceMap.put(start, 0.0);
+        pq.add(current);
+
+        while(pq.size() > 0)
+        {
+            current = pq.remove();
+        }
+
+        if(current.equals(end)) break;
+        for(Point p : myGraph.get(current)){
+            double weight = current.distance(p);
+            double newDist = distanceMap.get(current) + weight;
+            if(newDist < distanceMap.get(p)){
+                distanceMap.put(p, newDist);
+                predMap.put(p, current);
+                pq.add(p);
+            }
+        }
+        
         return null;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
