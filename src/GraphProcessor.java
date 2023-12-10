@@ -107,6 +107,8 @@ public class GraphProcessor {
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
                  myGraph.get(ref[ptnum2]).add(ref[ptnum]);
             }
+
+            System.out.println("no infinite loop here");
         } 
         catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
@@ -190,7 +192,7 @@ public class GraphProcessor {
     public boolean connected(Point p1, Point p2) {
         Queue<Point> queue = new LinkedList<>();
         queue.addAll(myGraph.get(p1));
-        while(queue.size() > 1){
+        while(queue.size() > 0){
             Point head = queue.remove();
             if(head == p2) return true;
             queue.addAll(myGraph.get(head));
