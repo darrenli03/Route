@@ -48,6 +48,8 @@ public class GraphProcessor {
         Next m lines will be edges with the format: first point [space] second vertex
         */
 
+        //need to account for different cases
+
         Scanner s = new Scanner(new FileInputStream(new File("file")));
         String first = s.nextLine();
         String[] firstdata = first.split(" ");
@@ -66,6 +68,17 @@ public class GraphProcessor {
             Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
             myGraph.put(input, new HashSet<Point>());
             ref[i] = input;
+        }
+
+        for(int j = 0; j < egs; j++)
+        {
+            String line = s.nextLine();
+            String[] data = line.split(" ");
+
+            Point p1 = ref[Integer.parseInt(data[0])];
+            Point p2 = ref[Integer.parseInt(data[1])];
+            myGraph.get(p1).add(p2);
+            myGraph.get(p2).add(p1);
         }
 
 
@@ -153,7 +166,35 @@ public class GraphProcessor {
      * either because start is not connected to end or because start equals end.
      */
     public List<Point> route(Point start, Point end) throws IllegalArgumentException {
-        // TODO implement route
+        Map<Point, Double> distanceMap = new HashMap<>();
+        Map<Point, Point> predMap = new HashMap<>();
+        predMap.put(start, null);
+        final Comparator<Point> comp = new Comparator<Point>(){
+            @Override
+            public int compare(Point o1, Point o2) {
+                // TODO Auto-generated method stub
+                return 0;
+            }
+        };
+        PriorityQueue<Point> pq = new PriorityQueue<>(comp);
+        Point current = start;
+        distanceMap.put(start, 0.0);
+        pq.add(current);
+
+        while(pq.size() > 0){
+            current = pq.remove();
+            if(current.equals(end))break;
+        }
+
+        for(Point p : myGraph.get(current)){
+            double weight = current.distance(p);
+            double newDist = distanceMap.get(current) + weight;
+            if(newDist < distanceMap.get(p)){
+                distanceMap.put(p,newDist);
+                predMap.put(p,current);
+                pq.add(p)
+            }
+        }
         return null;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
