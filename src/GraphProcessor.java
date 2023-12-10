@@ -156,11 +156,17 @@ public class GraphProcessor {
      * @param p2 another point
      * @return true if and onlyu if p2 is reachable from p1 (and vice versa)
      */
-
-     //potential runtime of O((N+M)log N), which exceeds the required O(N+M)
     public boolean connected(Point p1, Point p2) {
-        List<Point> tester = new ArrayList<Point>();
-        return tester.contains(p1) && tester.contains(p2);
+        Queue<Point> queue = new LinkedList<>();
+        queue.addAll(myGraph.get(p1));
+        while(queue.size() > 1){
+            Point head = queue.remove();
+            if(head == p2) return true;
+            queue.addAll(myGraph.get(head));
+
+        }
+
+        return false;
     }
 
     /**
@@ -195,9 +201,9 @@ public class GraphProcessor {
                 current = pq.remove();
                 out.add(current);
                 if(current.equals(end)) break;
-            
 
-            
+
+
                 for(Point p : myGraph.get(current)){
                     double weight = current.distance(p);
                     double newDist = distanceMap.get(current) + weight;
@@ -207,8 +213,8 @@ public class GraphProcessor {
                         pq.add(p);
                     }
                 }
-            }   
-            
+            }
+
             return out;
         }catch(Exception e)
         {
