@@ -49,7 +49,7 @@ public class GraphProcessor {
         Next m lines will be edges with the format: first point [space] second vertex
         */
 
-        /*Scanner s = new Scanner(file);
+        Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
             int pts = Integer.parseInt(firstdata[0]);
@@ -76,8 +76,8 @@ public class GraphProcessor {
                 ptnum2 = Integer.parseInt(data[1]);
 
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
-                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);}*/
-        try{
+                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);}
+        /*try{
             Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
@@ -108,9 +108,10 @@ public class GraphProcessor {
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
                  myGraph.get(ref[ptnum2]).add(ref[ptnum]);
             }
-        } catch (Exception e){
+        } 
+        catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
-        }
+        }*/
 
     }
 
