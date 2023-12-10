@@ -192,11 +192,20 @@ public class GraphProcessor {
      */
     public boolean connected(Point p1, Point p2) {
         Queue<Point> queue = new LinkedList<>();
+        ArrayList<Point> visit = new ArrayList<Point>();
+        visit.add(p1);
         queue.addAll(myGraph.get(p1));
         while(queue.size() > 0){
             Point head = queue.remove();
-            if(head == p2) return true;
-            queue.addAll(myGraph.get(head));
+            if(head.equals(p2)) return true;
+            visit.add(head);
+
+            for(Point i : myGraph.get(head))
+            {
+                if(visit.contains(i))continue;
+                queue.add(i);
+            }
+            //queue.addAll(myGraph.get(head));
 
         }
 
