@@ -52,21 +52,30 @@ public class GraphProcessor {
             Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
-            int pts = Integer.parseInt(firstdata[1]);
+            int pts = Integer.parseInt(firstdata[0]);
             int egs = Integer.parseInt(firstdata[1]);
-            String[] names = new String[pts];
             Point[] ref = new Point[pts];
+            int ptnum = -1;
+            int ptnum2 = -2;
 
             for(int i = 0; i < pts; i++)
             {
-                String line = s.nextLine();
-                String[] data = line.split(" ");
-
-                //not sure if this is needed bruh
-                names[i] = data[0];
-                Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+                s.nextLine();
+                Point input = new Point(s.nextDouble(), s.nextDouble());
                 myGraph.put(input, new HashSet<Point>());
                 ref[i] = input;
+            }
+
+            for(int j = 0; j < egs; j++)
+            {
+                s.nextLine();
+
+                //ptnum is the first point's number in the point reference array of the edge, ptnum2 is the second
+                ptnum = s.nextInt();
+                ptnum2 = s.nextInt();
+
+                myGraph.get(ref[ptnum]).add(ref[ptnum2]);
+                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);
             }
         } catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
@@ -147,6 +156,8 @@ public class GraphProcessor {
      * @param p2 another point
      * @return true if and onlyu if p2 is reachable from p1 (and vice versa)
      */
+
+     //potential runtime of O((N+M)log N), which exceeds the required O(N+M)
     public boolean connected(Point p1, Point p2) {
         List<Point> tester = new ArrayList<Point>();
         return tester.contains(p1) && tester.contains(p2);
