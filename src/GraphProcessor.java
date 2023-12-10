@@ -72,9 +72,6 @@ public class GraphProcessor {
             throw new IOException("Could not read .graph file, or something else lmao idk");
         }
 
-
-
-
     }
 
     public boolean testFileType(String name){
@@ -132,7 +129,12 @@ public class GraphProcessor {
      */
     public double routeDistance(List<Point> route) {
         double d = 0.0;
-        //TODO
+        Point start = route.get(0);
+        for(int i=1; i< route.size(); i++){
+            double distance = route.get(i).distance(start);
+            d += distance;
+            start = route.get(i);
+        }
         return d;
     }
     
