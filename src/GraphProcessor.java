@@ -194,7 +194,7 @@ public class GraphProcessor {
         ArrayList<Point> visit = new ArrayList<Point>();
         visit.add(p1);
         queue.addAll(myGraph.get(p1));
-        while(queue.size() > 0){
+        while(queue.size() > 1){
             Point head = queue.remove();
             if(head.equals(p2)) return true;
             visit.add(head);
