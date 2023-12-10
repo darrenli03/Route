@@ -178,33 +178,42 @@ public class GraphProcessor {
     public List<Point> route(Point start, Point end) throws IllegalArgumentException {
         Map<Point, Double> distanceMap = new HashMap<>();
         Map<Point,Point> predMap = new HashMap<>();
-        predMap.put(start, null);
-        final Comparator<Point> comp = new Comparator<Point>(){
-            //TODO
-        };
-        PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
-        Point current = start;
-        distanceMap.put(start, 0.0);
-        pq.add(current);
+        List<Point> out = new ArrayList<Point>();
 
-        while(pq.size() > 0)
+        try{
+            predMap.put(start, null);
+            final Comparator<Point> comp = new Comparator<Point>(){
+                //TODO
+            };
+            PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
+            Point current = start;
+            distanceMap.put(start, 0.0);
+            pq.add(current);
+
+            while(pq.size() > 0)
+            {
+                current = pq.remove();
+                out.add(current);
+                if(current.equals(end)) break;
+            
+
+            
+                for(Point p : myGraph.get(current)){
+                    double weight = current.distance(p);
+                    double newDist = distanceMap.get(current) + weight;
+                    if(newDist < distanceMap.get(p)){
+                        distanceMap.put(p, newDist);
+                        predMap.put(p, current);
+                        pq.add(p);
+                    }
+                }
+            }   
+            
+            return out;
+        }catch(Exception e)
         {
-            current = pq.remove();
-            if(current.equals(end)) break;
+            throw new IllegalArgumentException("No path between start and end");
         }
-
-        
-        for(Point p : myGraph.get(current)){
-            double weight = current.distance(p);
-            double newDist = distanceMap.get(current) + weight;
-            if(newDist < distanceMap.get(p)){
-                distanceMap.put(p, newDist);
-                predMap.put(p, current);
-                pq.add(p);
-            }
-        }
-        
-        return null;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String name = "data/usa.graph";
