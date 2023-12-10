@@ -200,7 +200,27 @@ public class GraphProcessor {
                 pq.add(p);
             }
         }
-        return null;
+
+        List<Point> out = new ArrayList<Point>();
+        Point p = start;
+        while(!p.equals(end))
+        {
+            if(predMap.keySet().contains(p))
+            {
+                out.add(p);
+            }
+            else{
+                throw new IllegalArgumentException();
+            }
+        }
+
+        if(predMap.keySet().contains(end))
+        {
+            out.add(end);
+            return out;
+        }
+        
+        throw new IllegalArgumentException();
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String name = "data/usa.graph";
