@@ -221,7 +221,9 @@ public class GraphProcessor {
         try{
             predMap.put(start, null);
             final Comparator<Point> comp = new Comparator<Point>(){
-                //TODO
+                public int compare(Point p1, Point p2){
+                    return p1.compareTo(p2);
+                }
             };
             PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
             Point current = start;
