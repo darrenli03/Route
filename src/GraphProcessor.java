@@ -167,14 +167,16 @@ public class GraphProcessor {
      * the last. Distance returned in miles.
      * @return The distance to get from start to end
      */
-    public double routeDistance(List<Point> route)  {
+    public double routeDistance(List<Point> route) throws IOException {
         double d = 0.0;
-        Point current = route.get(0);
+        Point start = route.get(0);
+        Point current = start;
         for(int i=1; i< route.size(); i++){
             double distance = route.get(i).distance(current);
             d += distance;
             current = route.get(i);
         }
+        if(start == current) throw new IOException("start and end Points are the same");
 
         return d;
     }
@@ -190,20 +192,11 @@ public class GraphProcessor {
      */
     public boolean connected(Point p1, Point p2) {
         Queue<Point> queue = new LinkedList<>();
-        ArrayList<Point> visit = new ArrayList<Point>();
-        visit.add(p1);
         queue.addAll(myGraph.get(p1));
         while(queue.size() > 0){
             Point head = queue.remove();
-            if(head.equals(p2)) return true;
-            visit.add(head);
-
-            for(Point i : myGraph.get(head))
-            {
-                if(visit.contains(i))continue;
-                queue.add(i);
-            }
-            //queue.addAll(myGraph.get(head));
+            if(head == p2) return true;
+            queue.addAll(myGraph.get(head));
 
         }
 
@@ -243,8 +236,10 @@ public class GraphProcessor {
             while(pq.size() > 1)
             {
                 current = pq.remove();
-                out.add(current);   
+                out.add(current);
                 if(current.equals(end)) break;
+
+
 
                 for(Point p : myGraph.get(current)){
                     double weight = current.distance(p);
