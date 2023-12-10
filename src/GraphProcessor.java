@@ -234,7 +234,7 @@ public class GraphProcessor {
             while(pq.size() > 1)
             {
                 current = pq.remove();
-                out.add(current);
+                out.add(current);   
                 if(current.equals(end)) break;
 
 
