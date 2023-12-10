@@ -48,7 +48,37 @@ public class GraphProcessor {
         Next n lines will be points with the format: point name [space] lat [space] long
         Next m lines will be edges with the format: first point [space] second vertex
         */
-        try{
+
+        Scanner s = new Scanner(file);
+            String first = s.nextLine();
+            String[] firstdata = first.split(" ");
+            int pts = Integer.parseInt(firstdata[0]);
+            int egs = Integer.parseInt(firstdata[1]);
+            Point[] ref = new Point[pts];
+            int ptnum = -1;
+            int ptnum2 = -2;
+
+            for(int i = 0; i < pts; i++)
+            {
+                String str = s.nextLine();
+                String[] data = str.split(" ");
+                Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
+                myGraph.put(input, new HashSet<Point>());
+                ref[i] = input;
+            }
+
+            for(int j = 0; j < egs; j++)
+            {
+                s.nextLine();
+                String str = s.nextLine();
+                String[] data = str.split(" ");
+                //ptnum is the first point's number in the point reference array of the edge, ptnum2 is the second
+                ptnum = Integer.parseInt(data[0]);
+                ptnum2 = Integer.parseInt(data[1]);
+
+                myGraph.get(ref[ptnum]).add(ref[ptnum2]);
+                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);}
+        /*try{
             Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
@@ -81,7 +111,7 @@ public class GraphProcessor {
             }
         } catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
-        }
+        }*/
 
     }
 
