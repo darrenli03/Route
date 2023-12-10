@@ -229,7 +229,49 @@ public class GraphProcessor {
         Map<Point,Point> predMap = new HashMap<>();
         List<Point> out = new ArrayList<Point>();
 
-        try{
+        predMap.put(start, null);
+            final Comparator<Point> comp = new Comparator<Point>(){
+                public int compare(Point p1, Point p2){
+                    Double d1 = distanceMap.get(p1);
+                    Double d2 = distanceMap.get(p2);
+
+                    return d1.compareTo(d2);
+                }
+            };
+            PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
+            Point current = start;
+            distanceMap.put(start, 0.0);
+            pq.add(current);
+            out.add(start);
+
+            while(pq.size() > 0) {
+                current = pq.remove();
+                if(!out.contains(current)) out.add(current);
+                if(current.equals(end)) break;
+
+
+
+                for(Point p : myGraph.get(current)){
+                    double weight = current.distance(p);
+                    double newDist = distanceMap.get(current) + weight;
+                    double testdist;
+                    if(distanceMap.get(p) == null)
+                    {
+                        testdist = Double.MAX_VALUE;
+                    }
+                    else{
+                        testdist = distanceMap.get(p);
+                    }
+                    if(newDist < testdist){
+                        distanceMap.put(p, newDist);
+                        predMap.put(p, current);
+                        pq.add(p);
+                    }
+                }
+            }
+            return out;
+
+        /*try{
             predMap.put(start, null);
             final Comparator<Point> comp = new Comparator<Point>(){
                 public int compare(Point p1, Point p2){
@@ -267,7 +309,7 @@ public class GraphProcessor {
         }catch(Exception e)
         {
             throw new IllegalArgumentException("No path between start and end");
-        }
+        }*/
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String name = "data/usa.graph";
