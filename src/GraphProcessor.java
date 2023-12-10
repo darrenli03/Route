@@ -192,7 +192,7 @@ public class GraphProcessor {
             if(newDist < distanceMap.get(p)){
                 distanceMap.put(p,newDist);
                 predMap.put(p,current);
-                pq.add(p)
+                pq.add(p);
             }
         }
         return null;
