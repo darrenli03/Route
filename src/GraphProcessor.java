@@ -229,6 +229,7 @@ public class GraphProcessor {
         Map<Point,Point> predMap = new HashMap<>();
         List<Point> out = new ArrayList<Point>();
 
+        /*
         predMap.put(start, null);
             final Comparator<Point> comp = new Comparator<Point>(){
                 public int compare(Point p1, Point p2){
@@ -269,9 +270,9 @@ public class GraphProcessor {
                     }
                 }
             }
-            return out;
+            return out;*/
 
-        /*try{
+        try{
             predMap.put(start, null);
             final Comparator<Point> comp = new Comparator<Point>(){
                 public int compare(Point p1, Point p2){
@@ -297,19 +298,26 @@ public class GraphProcessor {
                 for(Point p : myGraph.get(current)){
                     double weight = current.distance(p);
                     double newDist = distanceMap.get(current) + weight;
-                    if(newDist < distanceMap.get(p)){
+                    double testdist;
+                    if(distanceMap.get(p) == null)
+                    {
+                        testdist = Double.MAX_VALUE;
+                    }
+                    else{
+                        testdist = distanceMap.get(p);
+                    }
+                    if(newDist < testdist){
                         distanceMap.put(p, newDist);
                         predMap.put(p, current);
                         pq.add(p);
                     }
                 }
             }
-
             return out;
         }catch(Exception e)
         {
             throw new IllegalArgumentException("No path between start and end");
-        }*/
+        }
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
         String name = "data/usa.graph";
