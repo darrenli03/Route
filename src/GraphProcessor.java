@@ -48,35 +48,7 @@ public class GraphProcessor {
         Next n lines will be points with the format: point name [space] lat [space] long
         Next m lines will be edges with the format: first point [space] second vertex
         */
-
-        Scanner s = new Scanner(file);
-            String first = s.nextLine();
-            String[] firstdata = first.split(" ");
-            int pts = Integer.parseInt(firstdata[0]);
-            int egs = Integer.parseInt(firstdata[1]);
-            Point[] ref = new Point[pts];
-            int ptnum = -1;
-            int ptnum2 = -2;
-
-            for(int i = 0; i < pts; i++)
-            {
-                s.nextLine();
-                Point input = new Point(s.nextDouble(), s.nextDouble());
-                myGraph.put(input, new HashSet<Point>());
-                ref[i] = input;
-            }
-
-            for(int j = 0; j < egs; j++)
-            {
-                s.nextLine();
-
-                //ptnum is the first point's number in the point reference array of the edge, ptnum2 is the second
-                ptnum = s.nextInt();
-                ptnum2 = s.nextInt();
-
-                myGraph.get(ref[ptnum]).add(ref[ptnum2]);
-                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);}
-        /*try{
+        try{
             Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
@@ -88,8 +60,9 @@ public class GraphProcessor {
 
             for(int i = 0; i < pts; i++)
             {
-                s.nextLine();
-                Point input = new Point(s.nextDouble(), s.nextDouble());
+                String str = s.nextLine();
+                String[] data = str.split(" ");
+                Point input = new Point(Double.parseDouble(data[1]), Double.parseDouble(data[2]));
                 myGraph.put(input, new HashSet<Point>());
                 ref[i] = input;
             }
@@ -97,17 +70,18 @@ public class GraphProcessor {
             for(int j = 0; j < egs; j++)
             {
                 s.nextLine();
-
+                String str = s.nextLine();
+                String[] data = str.split(" ");
                 //ptnum is the first point's number in the point reference array of the edge, ptnum2 is the second
-                ptnum = s.nextInt();
-                ptnum2 = s.nextInt();
+                ptnum = Integer.parseInt(data[0]);
+                ptnum2 = Integer.parseInt(data[1]);
 
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
                  myGraph.get(ref[ptnum2]).add(ref[ptnum]);
             }
         } catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
-        }*/
+        }
 
     }
 
@@ -216,13 +190,8 @@ public class GraphProcessor {
 
         try{
             predMap.put(start, null);
-            //TODO verify functionality of compare
             final Comparator<Point> comp = new Comparator<Point>(){
-                @Override
-                public int compare(Point p1, Point p2){
-
-                    return p1.compareTo(p2);
-                }
+                //TODO
             };
             PriorityQueue<Point> pq = new PriorityQueue<Point>(comp);
             Point current = start;
