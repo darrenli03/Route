@@ -49,7 +49,7 @@ public class GraphProcessor {
         Next m lines will be edges with the format: first point [space] second vertex
         */
 
-        Scanner s = new Scanner(file);
+        /*Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
             int pts = Integer.parseInt(firstdata[0]);
@@ -76,8 +76,8 @@ public class GraphProcessor {
                 ptnum2 = Integer.parseInt(data[1]);
 
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
-                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);}
-        /*try{
+                 myGraph.get(ref[ptnum2]).add(ref[ptnum]);}*/
+        try{
             Scanner s = new Scanner(file);
             String first = s.nextLine();
             String[] firstdata = first.split(" ");
@@ -98,7 +98,6 @@ public class GraphProcessor {
 
             for(int j = 0; j < egs; j++)
             {
-                s.nextLine();
                 String str = s.nextLine();
                 String[] data = str.split(" ");
                 //ptnum is the first point's number in the point reference array of the edge, ptnum2 is the second
@@ -111,7 +110,7 @@ public class GraphProcessor {
         } 
         catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
-        }*/
+        }
 
     }
 
@@ -214,6 +213,7 @@ public class GraphProcessor {
      * either because start is not connected to end or because start equals end.
      */
     public List<Point> route(Point start, Point end) throws IllegalArgumentException {
+        if(start.equals(end)) throw new IllegalArgumentException("Start and end are the same");
         Map<Point, Double> distanceMap = new HashMap<>();
         Map<Point,Point> predMap = new HashMap<>();
         List<Point> out = new ArrayList<Point>();
