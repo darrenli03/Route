@@ -195,7 +195,7 @@ public class GraphProcessor {
         queue.addAll(myGraph.get(p1));
         while(queue.size() > 0){
             Point head = queue.remove();
-            if(head == p2) return true;
+            if(head.equals(p2)) return true;
             queue.addAll(myGraph.get(head));
 
         }
