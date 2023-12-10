@@ -69,7 +69,6 @@ public class GraphProcessor {
 
             for(int j = 0; j < egs; j++)
             {
-                s.nextLine();
                 String str = s.nextLine();
                 String[] data = str.split(" ");
                 //ptnum is the first point's number in the point reference array of the edge, ptnum2 is the second
