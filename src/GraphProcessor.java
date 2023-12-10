@@ -167,16 +167,14 @@ public class GraphProcessor {
      * the last. Distance returned in miles.
      * @return The distance to get from start to end
      */
-    public double routeDistance(List<Point> route) throws IOException {
+    public double routeDistance(List<Point> route)  {
         double d = 0.0;
-        Point start = route.get(0);
-        Point current = start;
+        Point current = route.get(0);
         for(int i=1; i< route.size(); i++){
             double distance = route.get(i).distance(current);
             d += distance;
             current = route.get(i);
         }
-        if(start == current) throw new IOException("start and end Points are the same");
 
         return d;
     }
