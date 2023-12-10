@@ -38,17 +38,17 @@ public class GraphProcessor {
 
      //Status: FINISHED BUT UNTESTED
     public void initialize(FileInputStream file) throws IOException {
-        if (!testFileType("" + file)) {
-			throw new IOException("Could not read .graph file");
-		}
+        //TODO this does not work because the FileInputStream file does not store the file's name
+//        if (!testFileType("" + file)) {
+//			throw new IOException("Could not read .graph file");
+//		}
 
         /*File input formatting:
         First line will always be the # of points, followed by a space, followed by # of edges
         Next n lines will be points with the format: point name [space] lat [space] long
         Next m lines will be edges with the format: first point [space] second vertex
         */
-
-        Scanner s = new Scanner(new FileInputStream(new File("file")));
+        Scanner s = new Scanner(file);
         String first = s.nextLine();
         String[] firstdata = first.split(" ");
         int pts = Integer.parseInt(firstdata[1]);
@@ -67,10 +67,6 @@ public class GraphProcessor {
             myGraph.put(input, new HashSet<Point>());
             ref[i] = input;
         }
-
-
-
-        
 
 
     }
@@ -105,9 +101,17 @@ public class GraphProcessor {
      * @return The closest point in the graph to p
      */
     public Point nearestPoint(Point p) {
-        // TODO implement nearestPoint
+        double minDistance = 0;
+        Point closestPoint = null;
+        for(Point s : myGraph.keySet()){
+            //if the current point is closer than all other previous points or if it is the first point checked
+            if((p.distance(s) < minDistance && minDistance!=0) || closestPoint == null){
+                minDistance = p.distance(s);
+                closestPoint = s;
+            }
+        }
 
-        return null;
+        return closestPoint;
     }
 
 
@@ -122,7 +126,7 @@ public class GraphProcessor {
      */
     public double routeDistance(List<Point> route) {
         double d = 0.0;
-        // TODO implement routeDistance
+        //TODO
         return d;
     }
     
