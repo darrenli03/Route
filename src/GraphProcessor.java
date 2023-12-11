@@ -9,7 +9,12 @@ import java.util.*;
  * To do: Add your name(s) as additional authors
  * @author Brandon Fain
  * @author Owen Astrachan modified in Fall 2023
+<<<<<<< HEAD
  *
+=======
+ * @author Darren Li
+ * @author Kevin Han
+>>>>>>> dc6a4d79ca1f0531a510801303ac9b86a8ea75e3
  */
 public class GraphProcessor {
     /**
