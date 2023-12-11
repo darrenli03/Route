@@ -21,12 +21,9 @@ public class GraphProcessor {
      */
 
     // include instance variables here
-    private Map<Point, Set<Point>> myGraph;
-
-
+    private Map<Point, Set<Point>> myGraph = new HashMap<Point, Set<Point>>();
 
     public GraphProcessor(){
-        myGraph = new HashMap<Point, Set<Point>>();
 
     }
 
@@ -110,10 +107,10 @@ public class GraphProcessor {
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
                  myGraph.get(ref[ptnum2]).add(ref[ptnum]);
             }
-            file.close();
-            s.close();
 
-//            System.out.println("no infinite loop here");
+            System.out.println("no infinite loop here");
+
+            s.close();
         } 
         catch (Exception e){
             throw new IOException("Could not read .graph file, or something else lmao idk");
@@ -199,7 +196,7 @@ public class GraphProcessor {
         ArrayList<Point> visit = new ArrayList<Point>();
         visit.add(p1);
         queue.addAll(myGraph.get(p1));
-        while(queue.size() > 1){
+        while(queue.size() > 0){
             Point head = queue.remove();
             if(head.equals(p2)) return true;
             visit.add(head);
@@ -229,15 +226,19 @@ public class GraphProcessor {
      * either because start is not connected to end or because start equals end.
      */
     public List<Point> route(Point start, Point end) throws IllegalArgumentException {
-        if(start.equals(end)) throw new IllegalArgumentException("start and end are the same");
+        if(start.equals(end)) throw new IllegalArgumentException("No path between start and end");
         Map<Point, Double> distanceMap = new HashMap<>();
         Map<Point,Point> predMap = new HashMap<>();
         List<Point> out = new ArrayList<Point>();
         predMap.put(start, null);
-        final Comparator<Point> comp = (p1, p2) -> {
-            Double dist1 = distanceMap.get(p1);
-            Double dist2 = distanceMap.get(p2);
-            return dist1.compareTo(dist2);
+        final Comparator<Point> comp = new Comparator<Point>()
+        {
+            @Override
+            public int compare(Point p1, Point p2) {
+                Double dist1 = distanceMap.get(p1);
+                Double dist2 = distanceMap.get(p2);
+                return dist1.compareTo(dist2);
+            }
         };
 
         for (Point p : myGraph.keySet()) {
@@ -258,7 +259,7 @@ public class GraphProcessor {
 
             for (Point p : myGraph.get(current)) {
                 double weight = current.distance(p);
-                double newDist = distanceMap.getOrDefault(current,0.0) + weight;
+                double newDist = distanceMap.get(current) + weight;
 
                 if (newDist < distanceMap.get(p)) {
                     distanceMap.put(p, newDist);
@@ -269,9 +270,10 @@ public class GraphProcessor {
         }
 
         if (!current.equals(end))throw new IllegalArgumentException("No path between start and end");
-
+        
         while (current != null) {
             out.add(current);
+
             current = predMap.get(current);
         }
 
