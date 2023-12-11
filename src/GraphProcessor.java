@@ -110,6 +110,8 @@ public class GraphProcessor {
                 myGraph.get(ref[ptnum]).add(ref[ptnum2]);
                  myGraph.get(ref[ptnum2]).add(ref[ptnum]);
             }
+            file.close();
+            s.close();
 
 //            System.out.println("no infinite loop here");
         } 
