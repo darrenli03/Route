@@ -243,7 +243,6 @@ public class GraphProcessor {
         for (Point p : myGraph.keySet()) {
             for(Point q : myGraph.get(p))
             {
-                //TODO did you mean to put q here instead of p
                 distanceMap.put(q, Double.POSITIVE_INFINITY);
             }
         }
