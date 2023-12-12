@@ -70,8 +70,6 @@ public class GraphProcessor {
             myGraph.get(ref[ptnum2]).add(ref[ptnum]);
         }
 
-        System.out.println("no infinite loop here");
-
         s.close();
 
 
