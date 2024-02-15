@@ -55,7 +55,7 @@ public class GraphDemo {
         String end = "Seattle WA";
 
         /** remove comment for user-interaction
-         
+         **/
         Scanner in = new Scanner(System.in);
         System.out.print("enter source location: ");
         start = in.nextLine();
@@ -63,7 +63,7 @@ public class GraphDemo {
         end = in.nextLine();
         in.close();
 
-        **/
+
 
         if (! myMap.containsKey(start)){
             System.out.printf("couldn't find %s in graph\n",start);
